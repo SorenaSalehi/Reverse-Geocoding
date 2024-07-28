@@ -54,9 +54,11 @@ const renderUI = function () {
       if (!res.ok) {
         countriesContainer.insertAdjacentHTML(
           "beforeend",
-          `Problem with geocoding : error ${res.status}`
+          `Problem with geocoding : error ${res.status}
+          Try deferent Numbers`
         );
-        throw new Error(`Problem with geocoding : error ${res.status}`);
+        throw new Error(`Problem with geocoding : error ${res.status}
+          Try deferent Numbers`);
       }
       return res.json();
     })
@@ -67,7 +69,10 @@ const renderUI = function () {
       getCountryJson(data.address.country);
       console.log(`You are in ${data.address.city} , ${data.address.country}`);
     })
-    .catch((error) => console.error(`Something went wrong: ${error.message}`))
+    .catch((error) =>
+      console.error(`Something went wrong: ${error.message},
+      Try deferent Numbers`)
+    )
     .finally(() => (countriesContainer.style.opacity = 1));
 };
 
