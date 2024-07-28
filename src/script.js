@@ -1,6 +1,13 @@
 "use strict";
 
+//cm:API: (https://locationiq.com)
+//cm:Api key :( pk.d91f88ff4d19bf8dada031715a6889ab)
+
 const countriesContainer = document.querySelector(".countries");
+const latInput = document.querySelector(".lat");
+const lngInput = document.querySelector(".lng");
+const submitBtn = document.querySelector(".input-sub");
+let lat, lng;
 
 //render country HTML
 const renderCountry = function (country) {
@@ -29,14 +36,15 @@ const getCountryJson = function (country) {
   const request = fetch(`https://restcountries.com/v3.1/name/${country}`)
     .then((res) => res.json())
     .then((data) => {
+      countriesContainer.innerHTML = "";
       renderCountry(data[0]);
     });
 };
 
-//cm:API: (https://locationiq.com)
-//cm:Api key :( pk.d91f88ff4d19bf8dada031715a6889ab)
-//1.whereAmI function: (taking lat and lng)
-const whereAmI = function (lat, lng) {
+//Render UI
+const renderUI = function () {
+  lat = +latInput.value;
+  lng = +lngInput.value;
   //Response by lat & lng
   const request = fetch(
     `https://us1.locationiq.com/v1/reverse?key=pk.d91f88ff4d19bf8dada031715a6889ab&lat=${lat}&lon=${lng}&format=json&`
@@ -62,7 +70,6 @@ const whereAmI = function (lat, lng) {
     .catch((error) => console.error(`Something went wrong: ${error.message}`))
     .finally(() => (countriesContainer.style.opacity = 1));
 };
-// whereAmI(10.08, 1253.381);
-whereAmI(52.508, 13.381);
-whereAmI(190.037, 70.873);
-whereAmI(15.933, 18.474);
+
+//Submit btn
+submitBtn.addEventListener("click", renderUI);
